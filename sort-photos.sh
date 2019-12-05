@@ -10,10 +10,14 @@ set -o pipefail # Exitstatus pipe is dat van het laatste commando met foutcode
 
 # Sluit af als er geen JPG-bestanden in de huidige directory zitten
 if ! ls ./*.[Jj][Pp][Gg] > /dev/null 2>&1; then
-  echo "Geen JPG-bestanden gevonden!" >&2
+  echo "Geen JPG-bestanden gevonden!"
   exit 1
 fi
 
+# Loop over alle JPG-bestanden
 for pic in ./*.[Jj][Pp][Gg]; do
-  echo "${pic}"
+  # Bepaal jaar & maand van laatste wijziging
+  month_year=$(stat -c%y "${pic}" | cut -c 1-7)
+  # Toon bestandsnaam en jaar/maand
+  echo "${pic} -> ${month_year}"
 done
