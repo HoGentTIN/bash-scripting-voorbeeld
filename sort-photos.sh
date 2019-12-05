@@ -16,8 +16,13 @@ fi
 
 # Loop over alle JPG-bestanden
 for pic in ./*.[Jj][Pp][Gg]; do
-  # Bepaal jaar & maand van laatste wijziging
   month_year=$(stat -c%y "${pic}" | cut -c 1-7)
-  # Toon bestandsnaam en jaar/maand
   echo "${pic} -> ${month_year}"
+
+  if [ ! -d "${month_year}" ]; then
+    echo "Creating directory ${month_year}"
+    mkdir "${month_year}"
+  fi
+
+  mv "${pic}" "${month_year}"
 done
