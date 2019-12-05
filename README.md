@@ -1,17 +1,41 @@
-# Een Bash-script schrijven - stap 2
+# Een Bash-script schrijven - stap 3
 
-Als er JPG-bestanden in de huidige directory zitten, zullen we die nu een voor een aflopen. Schrijf alvast een lus die over alle JPG-bestanden in de huidige directory gaat. Gebruik een globbing-patroon om alle JPG-bestanden te selecteren.
+In deze stap gaan we van elk bestand de datum van laatste wijziging opzoeken, meer bepaald het jaar en de maand. Bij de meeste fototoestellen is dat ook de datum waarop de foto genomen is.
 
-Voorlopig drukt de lus enkel de naam van elk bestand af, later zullen we de eigenlijke functionaliteit toevoegen. De uitvoer van het script wordt dan ongeveer:
+Een meer geavanceerd script zou de [EXIF-data](https://en.wikipedia.org/wiki/Exif) van de foto kunnen uitlezen en op basis daarvan de datum waarop die genomen is bepalen. Probleem met deze benadering is dat er verschillen bestaan tussen merken van fototoestellen voor het invullen van de EXIF-data.
+
+Pas de lus aan zodat voor elke foto bepaald wordt wanneer die genomen is (op basis van de tijd van laaste wijziging). Gebruik hiervoor het commando `stat`. Bekijk de man-page om te na te gaan hoe je de gevraagde waarde in de juiste vorm kan opvragen.
+
+Probeer het commando eerst rechtstreeks uit op de command-line voordat je je script aanpast!
+
+Voorbeeld:
 
 ```console
-$ cd ~/linux/oplossing/Pictures/
-$ ../sort-photos.sh
-./P12100035.jpg
-./P12100036.jpg
-./P12100037.jpg
-./P12100038.jpg
-./P12100039.jpg
+$ stat ... P12100554.jpg
+2019-12-03 14:31:12.066617316 +0100
+```
+
+Ken deze waarde toe aan een variabele, bv. `year_month`. Zorg er ook voor dat we enkel jaar en maand overhouden:
+
+```console
+$ stat ... P12100554.jpg | ...
+2019-12
+```
+
+Druk nu in het script voor elk JPG-bestand zowel de naam als maand af, bv.:
+
+```console
+$ cd ~/linux/oplossing/Pictures
+$ ../sort-photos.sh 
+./P12100035.jpg -> 2017-05
+./P12100036.jpg -> 2017-05
+./P12100037.jpg -> 2017-05
+./P12100038.jpg -> 2017-05
+./P12100039.jpg -> 2017-05
+./P12100040.jpg -> 2017-05
+./P12100041.jpg -> 2017-05
+./P12100042.jpg -> 2017-05
+./P12100043.jpg -> 2017-05
 ...
 ```
 
@@ -19,5 +43,5 @@ Om je oplossing te controleren en de volgende stap te nemen, doe je:
 
 ```console
 $ cd ~/linux/opgave
-$ git checkout stap-3
+$ git checkout stap-4
 ```
